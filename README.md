@@ -91,7 +91,7 @@ ollama run llama3.1:8b-instruct-q4_K_M
 ```
 
 KokoroTTS model:
-It is responsible of hearing what LLM says to the user [Kokoro.onnx](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/main/onnx)
+It is responsible of hearing what LLM says to the user [Kokoro.onnx](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model.onnx?download=true)
 
 
   
