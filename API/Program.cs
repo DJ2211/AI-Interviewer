@@ -4,6 +4,7 @@ using AI.Interviewer.Api.State;
 using AI.Interviewer.Services;
 using AI.Interviewer.Services.Interfaces;
 
+ThreadPool.SetMinThreads(Environment.ProcessorCount * 4, Environment.ProcessorCount * 4);
 var builder = WebApplication.CreateBuilder(args);
 
 // --- SignalR ---

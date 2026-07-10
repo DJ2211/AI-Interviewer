@@ -11,7 +11,7 @@ namespace AI.Interviewer.Services.Models
         public string Role { get; set; } = "Software Developer";
         public DifficultyLevel Difficulty { get; set; } = DifficultyLevel.Medium;
         public InterviewerStyle Style { get; set; } = InterviewerStyle.Friendly;
-        public int DurationMinutes { get; set; } = 30;
+        public int TargetQuestionCount { get; set; } = 10;
         public int NoOfQuestions { get; set; } = 20;
         public bool IncludeCodingQuestions { get; set; } = true;
         public string InterviewerName { get; set; } = "Sarah";

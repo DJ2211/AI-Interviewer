@@ -50,7 +50,6 @@ var config = new InterviewConfiguration
     Role = ".NET Developer",
     Difficulty = DifficultyLevel.Medium,
     Style = InterviewerStyle.Friendly,
-    DurationMinutes = 30,
     IncludeCodingQuestions = false,
     InterviewerName = "Sarah"
 };

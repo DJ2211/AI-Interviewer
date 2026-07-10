@@ -8,4 +8,5 @@ public class InterviewConnectionState
     public List<byte> AudioBuffer { get; } = new();
     public int ConsecutiveEmptyTurns { get; set; } = 0;
     public bool IsProcessingTurn { get; set; } = false;
+    public int QuestionsAsked { get; set; } = 0;
 }
