@@ -257,5 +257,5 @@ Project Link: [https://github.com](https://github.com/DJ2211/AI-Interviewer)
 [product-screenshot]: images/project.gif
 [Dotnet]: https://img.shields.io/badge/dotnet-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
 [Dotnet-url]: https://dotnet.microsoft.com/en-us/
-[Ollama]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[Ollama]: https://img.shields.io/badge/-Ollama-000000?style=flat&logo=ollama&logoColor=white
 [Ollama-url]: https://ollama.com/
