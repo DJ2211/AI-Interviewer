@@ -12,10 +12,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/DJ2211/AI-Interviewer">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
   <h3 align="center">AI-Interviewer</h3>
 
   <p align="center">
@@ -65,47 +61,41 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+Practice Real-Time Unlimited Technical/Non-Technical Interviews locally and also get transcription of entire interview for verdict.
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-If you want to practice Real-Time Technical as well as Non-Technical Interviews, you can take Unlimited interviews, also manage the difficulty of the interviews. After the completion of the interview just copy the given 
-transcription of your interview and paste it in your favorite LLM, It will give verdict of your interview.
-
-**Tested and worked for Windows. Testing Remaining for Mac/Linux**
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
-* [![.NET][Dotnet-shield]][Dotnet-url]
-* [![Ollama][Ollama-shield]][Ollama-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+* [![.NET][Dotnet]][Dotnet-url]
+* [![Ollama][Ollama]][Ollama-url]
 
 
 
 ## Getting Started
 
-Follow these steps to set up the AI Interviewer locally. The application relies on a .NET backend, a lightweight HTML/JS frontend, Ollama for the conversational LLM, and Kokoro for local Text-to-Speech processing.
+Follow below steps to set up the AI Interviewer locally. The application relies on a .NET backend, a lightweight HTML/JS frontend, Ollama for the conversational LLM, and Kokoro for local Text-to-Speech processing.
+
+
 
 ### Flow
--> You Start the interview by filling the Form From the UI and click Start Interview button 
--> Make sure ollama model is running on port http://localhost:11434
--> KokoroTTS is installed along with its voice command
+* You Start the interview by filling the Form From the UI and click Start Interview button
+*  Make sure ollama model is running on port http://localhost:11434
+* KokoroTTS is installed along with its voice command
 
-loop this below two steps for certain number of questions
--> Interviewer will introduce herself, and ask questions
--> you give answers according to your best knowledge
+* loop this below two steps for certain number of questions
+  * Interviewer will introduce herself, and ask questions
+  * You give answers according to your best knowledge
 
--> transcription will be generated copy it and paste it into your favorite LLM (Chatgpt/DeepSeek/Gemini/Claude, etc) 
+* transcription will be generated copy it and paste it into your favorite LLM (Chatgpt/DeepSeek/Gemini/Claude, etc) 
 
--> Hurray you will get your verdict along with all the key matrics you have to take care of.
+* Hurray you will get your verdict along with all the key matrics you have to take care of.
 
--> If you want to change the style of interview or LocalLLM Model (Remember it is the brain of your Interviewer so the powerfull the model the good the interview),
+* If you want to change the style of interview or LocalLLM Model (Remember it is the brain of your Interviewer so the powerfull the model the good the interview),
    but we have to take care of bigger models, as the models will be appended in GPU, and if GPU is not able to fit it, then it will get appended in CPU, if memory is also not able to fit it. then it will give 
    very unpleasent errors, and as a developer we dont want that :)
 
--> Enjoy the interview, repeat till get better. 
+* Enjoy the interview, repeat till get better. 
 
 
 
@@ -113,7 +103,7 @@ loop this below two steps for certain number of questions
 
 You will need the following software installed on your system:
 
-* ** Windows 10/11 (temporary as Testing for Mac and Linux is remaining)
+* **Windows 10/11** (temporary as Testing for Mac and Linux is remaining)
   
 * **.NET 10 SDK** (For running Backend Project)
   [Download .NET 10 SDK](https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.301/dotnet-sdk-10.0.301-win-x64.exe)
@@ -143,52 +133,48 @@ remaining
 
 1. Clone the repo
 ```sh
-  git clone https://github.com/DJ2211/AI-Interviewer.git
-  cd AI-Interviewer
+git clone https://github.com/DJ2211/AI-Interviewer.git
+cd AI-Interviewer
 ```
 
 2. Add the Kokoro TTS Model
-  Because of GitHub's file size limits, the Text-to-Speech model is not included in the repository.
+Because of GitHub's file size limits, the Text-to-Speech model is not included in the repository.
   
-  Download the kokoro.onnx model from [].
-  
-  Place the kokoro.onnx file directly into your API folder (or wherever your code is expecting to find it).
+Download the kokoro.onnx model from [].
+Place the kokoro.onnx file directly into your API folder (or wherever your code is expecting to find it).
 
 3. Start the LLM
-  Open Ollama and run your downloaded LLM from the terminal:
-  
-  ```sh
-  ollama run llama3.1:8b-instruct-q4_K_M
-  ```
+Open Ollama and run your downloaded LLM from the terminal:
+
+```sh
+ollama run llama3.1:8b-instruct-q4_K_M
+```
 
 4. Configure the API
-  Go to the API Project and update the appsettings.json file to match your Ollama setup. Ensure the BaseUrl and ModelName match exactly.
-  
-  ```JSON
-  "LLM": {
-    "BaseUrl": "http://localhost:11434",
-    "ModelName": "llama3.1:8b-instruct-q4_K_M",
-    "Temperature": 0.7,
-    "MaxTokens": 1024
-  }
-  ```
+Go to the API Project and update the appsettings.json file to match your Ollama setup. Ensure the BaseUrl and ModelName match exactly.
+
+```JSON
+"LLM": {
+  "BaseUrl": "http://localhost:11434",
+  "ModelName": "llama3.1:8b-instruct-q4_K_M",
+  "Temperature": 0.7,
+  "MaxTokens": 1024
+}
+```
 
 5. Install the Kokoro TTS onnx model
 
 6. Run the Backend API
-  Open a terminal in your API project folder and start the server:
+Open a terminal in your API project folder and start the server:
   
-  ```sh
-  cd API
-  dotnet run
-  ```
-  (Ensure it is running on http://localhost:5075, as expected by your frontend).
+```sh
+cd API
+dotnet run
+```
+(Ensure it is running on http://localhost:5075, as expected by your frontend).
 
 7. Open the UI [UI](https://github.com/DJ2211/AI-Interviewer-UI)
-  Since frontend is a plain HTML file, simply open index.html in your web browser (or use an extension like VS Code Live Server) to start your interview.
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Since frontend is a plain HTML file, simply open index.html in your web browser (or use an extension like VS Code Live Server) to start your interview.
 
 
 
@@ -197,8 +183,6 @@ remaining
 
 If You want to practice Real time Interview to ace Interviews, or to remove Fear of Giving interviews in Pressure, this is the Ultimate project which will help you.
 _For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -262,19 +246,6 @@ Project Link: [https://github.com](https://github.com/DJ2211/AI-Interviewer)
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -292,7 +263,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/jay-dholakia-a63103187/
 [product-screenshot]: images/project.gif
-[Dotnet-shield]: [https://img.shields.io/badge/dotnet-512BD4?style=for-the-badge&logo=dotnet&logoColor=white]
+[Dotnet]: https://img.shields.io/badge/dotnet-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
 [Dotnet-url]: https://dotnet.microsoft.com/en-us/
-[Ollama-shield]: [https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB](https://img.shields.io/badge/-Ollama-000000?style=flat&logo=ollama&logoColor=white)
+[Ollama]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [Ollama-url]: https://ollama.com/
