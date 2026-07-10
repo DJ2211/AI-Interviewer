@@ -64,8 +64,7 @@ Practice Real-Time Unlimited Technical/Non-Technical Interviews locally and also
 
 ### Built With
 
-* [![.NET][Dotnet]][Dotnet-url]
-* [![Ollama][Ollama]][Ollama-url]
+[![.NET][Dotnet]][Dotnet-url] &middot; [![Ollama][Ollama]][Ollama-url]
 
 
 
@@ -80,19 +79,17 @@ Follow below steps to set up the AI Interviewer locally. The application relies 
 *  Make sure ollama model is running on port http://localhost:11434
 * KokoroTTS is installed along with its voice command
 
-* loop this below two steps for certain number of questions
-  * Interviewer will introduce herself, and ask questions
-  * You give answers according to your best knowledge
+* If everything is installed and running, you will have an Realtime AI Interview experience.
 
-* transcription will be generated copy it and paste it into your favorite LLM (Chatgpt/DeepSeek/Gemini/Claude, etc) 
+* The Interview can be completed by either telling the interviewer to complete the interview or wait for AI to complete it.
 
-* Hurray you will get your verdict along with all the key matrics you have to take care of.
+* After completiong of interview, you can copy transcriptions of the interview and paste it into your favorite LLM (Chatgpt/DeepSeek/Gemini/Claude) 
 
-* If you want to change the style of interview or LocalLLM Model (Remember it is the brain of your Interviewer so the powerfull the model the good the interview),
-   but we have to take care of bigger models, as the models will be appended in GPU, and if GPU is not able to fit it, then it will get appended in CPU, if memory is also not able to fit it. then it will give 
-   very unpleasent errors, and as a developer we dont want that :)
-
-* Enjoy the interview, repeat till get better. 
+* If you want to change the style of interview or LocalLLM Model (Remember it is the brain of the Interviewer)
+  * Good Model -> Good Interview
+  * Bad Model  -> Bad Interiview
+    
+* At the last, Enjoy the interviews, and if you want to change the interview just tweak as you want :)
 
 
 
@@ -100,7 +97,7 @@ Follow below steps to set up the AI Interviewer locally. The application relies 
 
 You will need the following software installed on your system:
 
-* **Windows 10/11** (temporary as Testing for Mac and Linux is remaining)
+* **Windows 10/11** (Testing for Mac and Linux is remaining)
   
 * **.NET 10 SDK** (For running Backend Project)
   [Download .NET 10 SDK](https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.301/dotnet-sdk-10.0.301-win-x64.exe)
@@ -109,7 +106,7 @@ You will need the following software installed on your system:
   [Download Ollama](https://ollama.com/download)
   
 * **KokoroTTS** (For running TTS Service)
-* [Download_KokoroTTS]()
+* [Download_KokoroTTS]
 
 **Required Local AI Models:**
 Before running the application, pull the required open-source LLM via your terminal using Ollama:
@@ -118,7 +115,7 @@ It consist of 4.9 GB and it will work as your own Local LLM like chatgpt, claude
 ollama run llama3.1:8b-instruct-q4_K_M
 ```
 
-Now We need to install KokoroTTS model:
+KokoroTTS model:
 Its responsible of hearing what LLM says to the output
 ```sh
 remaining
@@ -159,9 +156,7 @@ Go to the API Project and update the appsettings.json file to match your Ollama 
 }
 ```
 
-5. Install the Kokoro TTS onnx model
-
-6. Run the Backend API
+5. Run the Backend API
 Open a terminal in your API project folder and start the server:
   
 ```sh
@@ -170,7 +165,7 @@ dotnet run
 ```
 (Ensure it is running on http://localhost:5075, as expected by your frontend).
 
-7. Open the UI [UI](https://github.com/DJ2211/AI-Interviewer-UI)
+6. Open the UI **(Download ->)** [UI](https://github.com/DJ2211/AI-Interviewer-UI)
 Since frontend is a plain HTML file, simply open index.html in your web browser (or use an extension like VS Code Live Server) to start your interview.
 
 
@@ -178,8 +173,7 @@ Since frontend is a plain HTML file, simply open index.html in your web browser 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-If You want to practice Real time Interview to ace Interviews, or to remove Fear of Giving interviews in Pressure, this is the Ultimate project which will help you.
-_For more examples, please refer to the [Documentation](https://example.com)_
+If You want to practice Real time Interview to ace Interviews, or to remove Fear of Giving interviews in Time Pressure, Clone and give tons of interviews unless fear of interviews is removed.
 
 
 
@@ -187,12 +181,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [x] Services for Text To Speech(TTS), Speech To Text(STT), Local Language Model (LLM) As a Interviewer Brain
-- [x] API Project to run Smoothly
-- [ ] Feature to also Take DSA Interview using OpenSource Code Editor
+- [x] API Project To handle entire Orchestration
+- [ ] Implement DSA Coding Interviews using OpenSource Code Editor
 
 See the [open issues](https://github.com/DJ2211/AI-Interviewer/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
