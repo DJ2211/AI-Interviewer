@@ -30,21 +30,19 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#setup">Setup</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#acknowledgement">Acknowledgement</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -71,7 +69,7 @@ Follow below steps to set up the AI Interviewer locally. The application relies 
 
 
 
-### Prerequisites
+## Prerequisites
 
 You will need the following softwares installed on your system:
 
@@ -96,7 +94,7 @@ It is responsible of hearing what LLM says to the user [Kokoro.onnx](https://hug
 
   
 
-### Installation
+## Setup
 
 1. Clone the repo
 ```sh
@@ -178,7 +176,10 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-
+## Acknowledgement
+Thanks for visiting AI-Interviewer, please consider giving it a Star if you like the project.
+And if you love AI-Interviewer please consider giving it sponsership to continue new features. 
+:)
 
 
 <!-- CONTACT -->
