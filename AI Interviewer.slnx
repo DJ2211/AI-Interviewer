@@ -1,9 +1,4 @@
 <Solution>
-  <Folder Name="/.github/" />
-  <Folder Name="/.github/ISSUE_TEMPLATE/">
-    <File Path="bug-report---.md" />
-    <File Path="feature-request---.md" />
-  </Folder>
   <Project Path="AI.Interviewer.Console/AI.Interviewer.Console.csproj" />
   <Project Path="AI.Interviewer.Services/AI.Interviewer.Services.csproj" />
   <Project Path="API/AI.Interviewer.Api.csproj" />
