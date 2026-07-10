@@ -1,11 +1,10 @@
 <a id="readme-top"></a>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Unlicense License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+<div align="center">
+
+[![Contributors][contributors-shield]][contributors-url]  [![Forks][forks-shield]][forks-url]  [![Stargazers][stars-shield]][stars-url]  [![Issues][issues-shield]][issues-url]  [![Unlicense License][license-shield]][license-url]  [![LinkedIn][linkedin-shield]][linkedin-url]
+  
+</div>
 
 
 
@@ -15,10 +14,8 @@
   <h3 align="center">AI-Interviewer</h3>
 
   <p align="center">
-    Give Unlimited Offline Technical as well as Non-Technical Interviews.
-    <br />
-    <a href="https://github.com/DJ2211/AI-Interviewer"><strong>Explore the docs »</strong></a>
-    <br />
+    Give Unlimited Offline Tech/Non-Tech Interviews.
+    </br>
     <a href="https://github.com/DJ2211/AI-Interviewer/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
     <a href="https://github.com/DJ2211/AI-Interviewer/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
@@ -40,7 +37,6 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#Flow">Flow</a></li>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
@@ -50,7 +46,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -62,7 +57,6 @@ Practice Real-Time Unlimited Technical/Non-Technical Interviews locally and also
 
 
 
-### Built With
 <div align="center">
 
 [![.NET][Dotnet]][Dotnet-url] &middot; [![Ollama][Ollama]][Ollama-url]
@@ -77,30 +71,11 @@ Follow below steps to set up the AI Interviewer locally. The application relies 
 
 
 
-### Flow
-* You Start the interview by filling the Form From the UI and click Start Interview button
-*  Make sure ollama model is running on port http://localhost:11434
-* KokoroTTS is installed along with its voice command
-
-* If everything is installed and running, you will have an Realtime AI Interview experience.
-
-* The Interview can be completed by either telling the interviewer to complete the interview or wait for AI to complete it.
-
-* After completiong of interview, you can copy transcriptions of the interview and paste it into your favorite LLM (Chatgpt/DeepSeek/Gemini/Claude) 
-
-* If you want to change the style of interview or LocalLLM Model (Remember it is the brain of the Interviewer)
-  * Good Model -> Good Interview
-  * Bad Model  -> Bad Interiview
-    
-* At the last, Enjoy the interviews, and if you want to change the interview just tweak as you want :)
-
-
-
 ### Prerequisites
 
-You will need the following software installed on your system:
+You will need the following softwares installed on your system:
 
-* **Windows 10/11** (Testing for Mac and Linux is remaining)
+* **Windows 10/11**
   
 * **.NET 10 SDK** (For running Backend Project)
   [Download .NET 10 SDK](https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.301/dotnet-sdk-10.0.301-win-x64.exe)
@@ -108,21 +83,16 @@ You will need the following software installed on your system:
 * **Ollama** (For running the local LLM)
   [Download Ollama](https://ollama.com/download)
   
-* **KokoroTTS** (For running TTS Service)
-* [Download_KokoroTTS]
-
 **Required Local AI Models:**
 Before running the application, pull the required open-source LLM via your terminal using Ollama:
-It consist of 4.9 GB and it will work as your own Local LLM like chatgpt, claude, etc
+It consist of 4.9 GB and it will work as your own Local LLM like chatgpt or claude without using the internet.
 ```sh
 ollama run llama3.1:8b-instruct-q4_K_M
 ```
 
 KokoroTTS model:
-Its responsible of hearing what LLM says to the output
-```sh
-remaining
-```
+It is responsible of hearing what LLM says to the user [Kokoro.onnx](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/main/onnx)
+
 
   
 
@@ -135,10 +105,7 @@ cd AI-Interviewer
 ```
 
 2. Add the Kokoro TTS Model
-Because of GitHub's file size limits, the Text-to-Speech model is not included in the repository.
-  
-Download the kokoro.onnx model from [].
-Place the kokoro.onnx file directly into your API folder (or wherever your code is expecting to find it).
+Place the kokoro.onnx file directly into your API folder (along with program.cs of API project).
 
 3. Start the LLM
 Open Ollama and run your downloaded LLM from the terminal:
@@ -190,7 +157,6 @@ If You want to practice Real time Interview to ace Interviews, or to remove Fear
 See the [open issues](https://github.com/DJ2211/AI-Interviewer/issues) for a full list of proposed features (and known issues).
 
 
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -205,14 +171,6 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-### Top contributors:
-
-<a href="https://github.com/DJ2211/AI-Interviewer/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=DJ2211/AI-Interviewer" />
-</a>
-
-Made with [contrib.rocks](https://contrib.rocks).
-
 
 
 <!-- LICENSE -->
@@ -220,23 +178,16 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@linkedin](https://www.linkedin.com/in/jay-dholakia-a63103187/)
+Linkedin - [@linkedin](https://www.linkedin.com/in/jay-dholakia-a63103187/)
 
 Project Link: [https://github.com](https://github.com/DJ2211/AI-Interviewer)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
 
 
 
@@ -257,5 +208,5 @@ Project Link: [https://github.com](https://github.com/DJ2211/AI-Interviewer)
 [product-screenshot]: images/project.gif
 [Dotnet]: https://img.shields.io/badge/dotnet-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
 [Dotnet-url]: https://dotnet.microsoft.com/en-us/
-[Ollama]: https://img.shields.io/badge/-Ollama-000000?style=flat&logo=ollama&logoColor=white
+[Ollama]: https://img.shields.io/badge/-Ollama-FFFFFF?style=for-the-badge&logo=ollama&logoColor=black
 [Ollama-url]: https://ollama.com/
