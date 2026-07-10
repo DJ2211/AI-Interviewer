@@ -63,8 +63,10 @@ Practice Real-Time Unlimited Technical/Non-Technical Interviews locally and also
 
 
 ### Built With
-<div align='center'>
-  [![.NET][Dotnet]][Dotnet-url] &middot; [![Ollama][Ollama]][Ollama-url]  
+<div align="center">
+
+[![.NET][Dotnet]][Dotnet-url] &middot; [![Ollama][Ollama]][Ollama-url]
+
 </div>
 
 
