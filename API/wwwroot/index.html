@@ -1,0 +1,559 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>AI Interviewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #12141c;
+            color: #eee;
+            padding: 24px;
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        #setupScreen {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #1a1c26;
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+            #setupScreen label {
+                display: block;
+                margin-bottom: 4px;
+                font-size: 14px;
+                color: #ccc;
+            }
+
+            #setupScreen input[type="text"], #setupScreen input[type="number"], #setupScreen select, #setupScreen textarea {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 8px;
+                margin-bottom: 16px;
+                background: #12141c;
+                color: #eee;
+                border: 1px solid #333;
+                border-radius: 6px;
+            }
+
+            #setupScreen button {
+                width: 100%;
+                padding: 12px;
+                border-radius: 8px;
+                border: none;
+                cursor: pointer;
+                background: #3b6fd6;
+                color: white;
+                font-size: 15px;
+            }
+
+                #setupScreen button:disabled {
+                    background: #444;
+                    cursor: not-allowed;
+                }
+
+        .stage {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+        .blob-wrap {
+            text-align: center;
+        }
+
+        .blob {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
+            transform: scale(1);
+        }
+
+            .blob.ai {
+                background: radial-gradient(circle at 35% 30%, #7cc4ff, #3b6fd6);
+                box-shadow: 0 0 20px 4px rgba(59, 111, 214, 0.4);
+            }
+
+            .blob.user {
+                background: radial-gradient(circle at 35% 30%, #9dffb0, #2f9e5a);
+                box-shadow: 0 0 20px 4px rgba(47, 158, 90, 0.4);
+            }
+
+            .blob.idle {
+                opacity: 0.35;
+            }
+
+            .blob.thinking {
+                animation: pulse 1.2s infinite ease-in-out;
+            }
+
+        @keyframes pulse {
+            0%,100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .label {
+            font-size: 13px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        #talkBtn {
+            display: block;
+            margin: 0 auto 30px;
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            background: #2f9e5a;
+            color: white;
+        }
+
+            #talkBtn.active {
+                background: #d64545;
+            }
+
+            #talkBtn:disabled {
+                background: #444;
+                cursor: not-allowed;
+            }
+
+            #talkBtn.hidden {
+                display: none;
+            }
+
+        #status {
+            text-align: center;
+            color: #aaa;
+            min-height: 20px;
+            margin-bottom: 10px;
+        }
+
+        #log {
+            white-space: pre-wrap;
+            font-family: monospace;
+            border: 1px solid #333;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #1a1c26;
+            border-radius: 8px;
+        }
+
+        #evalModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            padding: 40px;
+            z-index: 100;
+        }
+
+            #evalModal .modal-content {
+                background: #1a1c26;
+                padding: 20px;
+                border-radius: 10px;
+                max-width: 700px;
+                margin: 0 auto;
+                position: relative;
+            }
+
+        #closeEvalBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #eee;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #evalText {
+            width: 100%;
+            height: 300px;
+            background: #12141c;
+            color: #eee;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #copyEvalBtn {
+            margin-top: 10px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>AI Interviewer</h2>
+
+    <div id="setupScreen">
+        <h3>Interview Setup</h3>
+
+        <label for="roleInput">Role / Language</label>
+        <input type="text" id="roleInput" placeholder="e.g. Python Developer" />
+
+        <label for="difficultySelect">Difficulty</label>
+        <select id="difficultySelect">
+            <option value="0">Junior</option>
+            <option value="1" selected>Medium</option>
+            <option value="2">Senior</option>
+        </select>
+
+        <label for="styleSelect">Interviewer Style</label>
+        <select id="styleSelect">
+            <option value="0" selected>Friendly</option>
+            <option value="1">Neutral</option>
+            <option value="2">Strict</option>
+        </select>
+
+        <label for="questionCountInput">Approx questions to be asked by AI?</label>
+        <input type="number" id="questionCountInput" value="10" min="5" max="20" />
+
+        <label><input type="checkbox" id="codingCheckbox" style="width:auto; margin-right:6px;" /> Include coding questions</label>
+
+        <div id="setupError" style="display:none; color:#ff6b6b; margin-bottom:12px; font-size:14px;"></div>
+        <button id="startBtn">Start Interview</button>
+    </div>
+
+    <div class="stage">
+        <div class="blob-wrap">
+            <div id="aiBlob" class="blob ai idle"></div>
+            <div class="label">Sarah</div>
+        </div>
+        <div class="blob-wrap">
+            <div id="userBlob" class="blob user idle"></div>
+            <div class="label">You</div>
+        </div>
+    </div>
+
+    <div id="status"></div>
+    <button id="talkBtn" class="hidden" disabled>Start Speaking</button>
+
+    <div id="evalModal">
+        <div class="modal-content">
+            <button id="closeEvalBtn">✕</button>
+            <h3>Interview Complete</h3>
+            <p>Copy this and paste into your favorite LLM to get your evaluation:</p>
+            <textarea id="evalText" readonly></textarea>
+            <button id="copyEvalBtn">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <h3>Transcript</h3>
+    <div id="log"></div>
+
+    <audio id="player" style="display:none;"></audio>
+
+    <script>
+        const SAMPLE_RATE = 16000;
+
+        const logDiv = document.getElementById("log");
+        const statusDiv = document.getElementById("status");
+        const talkBtn = document.getElementById("talkBtn");
+        const aiBlob = document.getElementById("aiBlob");
+        const userBlob = document.getElementById("userBlob");
+        const player = document.getElementById("player");
+
+        function log(msg) {
+            logDiv.textContent += msg + "\n";
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        function setStatus(msg) { statusDiv.textContent = msg; }
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5075/interviewHub")
+            .build();
+
+        function base64ToUint8Array(base64) {
+            const binary = window.atob(base64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            return bytes;
+        }
+        function arrayBufferToBase64(buffer) {
+            let binary = "";
+            const bytes = new Uint8Array(buffer);
+            for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+            return window.btoa(binary);
+        }
+
+        const audioQueue = [];
+        let isPlaying = false;
+
+        connection.on("ReceiveInterviewerAudioChunk", (text, audioBytes) => {
+            log("Sarah: " + text);
+            audioQueue.push(base64ToUint8Array(audioBytes));
+            playNextInQueue();
+        });
+
+        function playNextInQueue() {
+            if (isPlaying || audioQueue.length === 0) return;
+            isPlaying = true;
+            setStatus("Sarah is speaking...");
+            aiBlob.classList.remove("idle", "thinking");
+            talkBtn.classList.add("hidden");
+
+            const bytes = audioQueue.shift();
+            const blob = new Blob([bytes], { type: "audio/wav" });
+            player.src = URL.createObjectURL(blob);
+            player.play();
+            connectAiAnalyser();
+        }
+
+        player.onended = () => {
+            isPlaying = false;
+            if (audioQueue.length > 0) {
+                playNextInQueue();
+            } else {
+                setStatus("Your turn.");
+                aiBlob.classList.add("idle");
+                talkBtn.classList.remove("hidden");
+                talkBtn.disabled = false;
+            }
+        };
+
+        connection.on("ProcessingStarted", () => {
+            setStatus("Sarah is thinking...");
+            talkBtn.classList.add("hidden");
+            aiBlob.classList.add("thinking");
+        });
+
+        connection.on("CandidateTranscript", (text) => {
+            log("You: " + text);
+        });
+
+        connection.on("TranscriptionFailed", (error) => {
+            log("(Transcription failed: " + error + ")");
+            setStatus("Didn't catch that — try again.");
+            aiBlob.classList.remove("thinking");
+            aiBlob.classList.add("idle");
+            talkBtn.classList.remove("hidden");
+            talkBtn.disabled = false;
+        });
+
+        connection.on("InterviewerTurnComplete", (shouldEnd) => {
+            if (shouldEnd) {
+                setStatus("Interview complete.");
+                talkBtn.classList.add("hidden");
+                talkBtn.disabled = true;
+                isTalking = false;
+                if (workletNode) workletNode.port.onmessage = null;
+            }
+        });
+
+        connection.on("InterviewComplete", (evaluationPrompt) => {
+            document.getElementById("evalText").value = evaluationPrompt;
+            document.getElementById("evalModal").style.display = "block";
+        });
+
+        connection.onclose(() => log("--- Interview ended by server. ---"));
+
+        connection.start()
+            .then(() => log("Connected to hub."))
+            .catch(err => log("Connection error: " + err));
+
+        document.getElementById("startBtn").addEventListener("click", async () => {
+
+            const roleInput = document.getElementById("roleInput").value.trim();
+            const questionCountInput = document.getElementById("questionCountInput");
+
+            const questionCount = parseInt(questionCountInput.value);
+
+            const errors = [];
+
+            if (!roleInput) {
+                errors.push("Please enter a role/language.");
+            }
+
+            if (isNaN(questionCount) || questionCount < parseInt(questionCountInput.min) || questionCount > parseInt(questionCountInput.max)) {
+                errors.push(`Questions must be between ${questionCountInput.min} and ${questionCountInput.max}.`);
+            }
+
+            const errorBox = document.getElementById("setupError");
+            if (errors.length > 0) {
+                errorBox.textContent = errors.join(" ");
+                errorBox.style.display = "block";
+                return;
+            }
+            errorBox.style.display = "none";
+
+            const btn = document.getElementById("startBtn");
+            btn.disabled = true;
+            btn.textContent = "Requesting microphone access...";
+
+            try {
+                await setupAudioCapture();
+            } catch(err) {
+                log("Microphone access error:" + err);
+                btn.disabled = false;
+                btn.textContent = "Start Interview";
+                return;
+            }
+
+            btn.textContent = "Interview In Progress";
+            document.getElementById("setupScreen").style.display = "none";
+
+            const config = {
+                Role: document.getElementById("roleInput").value || "Software Developer",
+                Difficulty: parseInt(document.getElementById("difficultySelect").value),
+                Style: parseInt(document.getElementById("styleSelect").value),
+                TargetQuestionCount: parseInt(document.getElementById("questionCountInput")?.value) || 10,
+                IncludeCodingQuestions: document.getElementById("codingCheckbox").checked,
+                InterviewerName: "Sarah",
+            };
+
+            try {
+                await connection.invoke("StartInterview", config);
+                log("Interview started for: " + config.Role);
+                await setupAudioCapture();
+            } catch (err) {
+                log("StartInterview error: " + err);
+                btn.disabled = false;
+                btn.textContent = "Start Interview";
+                document.getElementById("setupScreen").style.display = "block";
+            }
+        });
+
+        let audioContext, workletNode, mediaStream, sourceNode, userAnalyser;
+        let isTalking = false;
+
+        async function setupAudioCapture() {
+            mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioContext = new AudioContext({ sampleRate: SAMPLE_RATE });
+
+            const workletCode = `
+                class PcmCaptureProcessor extends AudioWorkletProcessor {
+                    process(inputs) {
+                        const input = inputs[0];
+                        if (input.length > 0) {
+                            const channelData = input[0];
+                            const pcm16 = new Int16Array(channelData.length);
+                            for (let i = 0; i < channelData.length; i++) {
+                                let s = Math.max(-1, Math.min(1, channelData[i]));
+                                pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                            }
+                            this.port.postMessage(pcm16.buffer, [pcm16.buffer]);
+                        }
+                        return true;
+                    }
+                }
+                registerProcessor("pcm-capture-processor", PcmCaptureProcessor);
+            `;
+            const blob = new Blob([workletCode], { type: "application/javascript" });
+            const workletUrl = URL.createObjectURL(blob);
+            await audioContext.audioWorklet.addModule(workletUrl);
+
+            sourceNode = audioContext.createMediaStreamSource(mediaStream);
+            workletNode = new AudioWorkletNode(audioContext, "pcm-capture-processor");
+
+            userAnalyser = audioContext.createAnalyser();
+            userAnalyser.fftSize = 256;
+            sourceNode.connect(userAnalyser);
+
+            workletNode.port.onmessage = (event) => {
+                if (!isTalking) return;
+                connection.invoke("SendAudioChunk", arrayBufferToBase64(event.data))
+                    .catch(err => log("SendAudioChunk error: " + err));
+            };
+
+            talkBtn.classList.remove("hidden");
+            talkBtn.disabled = true; // stays disabled until Sarah's greeting finishes
+        }
+
+        talkBtn.addEventListener("click", async () => {
+            if (audioContext.state === "suspended") await audioContext.resume();
+
+            if (!isTalking) {
+                sourceNode.connect(workletNode);
+                const silentGain = audioContext.createGain();
+                silentGain.gain.value = 0;
+                workletNode.connect(silentGain);
+                silentGain.connect(audioContext.destination);
+
+                isTalking = true;
+                talkBtn.textContent = "Stop Speaking";
+                talkBtn.classList.add("active");
+                setStatus("Listening...");
+                userBlob.classList.remove("idle");
+                animateUserBlob();
+            } else {
+                isTalking = false;
+                sourceNode.disconnect(workletNode);
+                workletNode.disconnect();
+
+                talkBtn.textContent = "Start Speaking";
+                talkBtn.classList.remove("active");
+                talkBtn.disabled = true;
+                userBlob.classList.add("idle");
+                setStatus("Processing...");
+
+                try {
+                    await connection.invoke("EndOfSpeech");
+                } catch (err) {
+                    if (connection.state !== signalR.HubConnectionState.Connected) {
+                        log("(Interview already ended, ignoring)");
+                    } else {
+                        log("EndOfSpeech error: " + err);
+                    }
+                }
+            }
+        });
+
+        function animateUserBlob() {
+            if (!isTalking) return;
+            const data = new Uint8Array(userAnalyser.frequencyBinCount);
+            userAnalyser.getByteFrequencyData(data);
+            const avg = data.reduce((a, b) => a + b, 0) / data.length;
+            userBlob.style.transform = `scale(${1 + Math.min(avg / 80, 0.6)})`;
+            requestAnimationFrame(animateUserBlob);
+        }
+
+        let aiAnalyser, aiSource;
+        function connectAiAnalyser() {
+            if (!aiAnalyser) {
+                aiSource = audioContext.createMediaElementSource(player);
+                aiAnalyser = audioContext.createAnalyser();
+                aiAnalyser.fftSize = 256;
+                aiSource.connect(aiAnalyser);
+                aiAnalyser.connect(audioContext.destination);
+            }
+            aiBlob.classList.remove("idle");
+            animateAiBlob();
+        }
+        function animateAiBlob() {
+            if (!isPlaying) return;
+            const data = new Uint8Array(aiAnalyser.frequencyBinCount);
+            aiAnalyser.getByteFrequencyData(data);
+            const avg = data.reduce((a, b) => a + b, 0) / data.length;
+            aiBlob.style.transform = `scale(${1 + Math.min(avg / 80, 0.6)})`;
+            requestAnimationFrame(animateAiBlob);
+        }
+
+        document.getElementById("copyEvalBtn").addEventListener("click", async () => {
+            await navigator.clipboard.writeText(document.getElementById("evalText").value);
+            document.getElementById("copyEvalBtn").textContent = "Copied!";
+        });
+        document.getElementById("closeEvalBtn").addEventListener("click", () => {
+            document.getElementById("evalModal").style.display = "none";
+        });
+    </script>
+</body>
+</html>

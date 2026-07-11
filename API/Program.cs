@@ -34,7 +34,8 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 app.UseCors();
-
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.MapHub<InterviewerHub>("/interviewHub");
 
 // --- Initialize all three services once at startup ---
