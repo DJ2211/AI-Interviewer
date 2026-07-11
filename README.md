@@ -15,7 +15,11 @@
 
   <p align="center">
     Give Unlimited Offline Tech/Non-Tech Interviews.
-    </br>
+  </p>
+  <video src="https://github.com/user-attachments/assets/9fb74883-1e83-42f9-a52e-9a05df2b7ac5" controls="controls" muted="muted" width="600"></video>
+  <br />
+  
+  <p align="center">
     <a href="https://github.com/DJ2211/AI-Interviewer/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
     <a href="https://github.com/DJ2211/AI-Interviewer/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
