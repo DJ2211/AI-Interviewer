@@ -96,23 +96,22 @@ It is responsible of hearing what LLM says to the user [Kokoro.onnx](https://hug
 
 ## Setup
 
-1. Clone the repo
+1. Open a new Folder using CommandPrompt and Clone the repo
 ```sh
 git clone https://github.com/DJ2211/AI-Interviewer.git
 cd AI-Interviewer
 ```
 
-2. Add the Kokoro TTS Model
-Place the kokoro.onnx file directly into your API folder (along with program.cs of API project).
+2. Add kokoro.onnx file directly into your API folder (along with program.cs of API project).
 
 3. Start the LLM
-Open Ollama and run your downloaded LLM from the terminal:
+Open cmd and run your downloaded LLM from the terminal:
 
 ```sh
 ollama run llama3.1:8b-instruct-q4_K_M
 ```
 
-4. Configure the API
+4. Configure the API Project if you downloaded another LLM instead of **llama3.1:8b-instruct-q4_K_M**
 Go to the API Project and update the appsettings.json file to match your Ollama setup. Ensure the BaseUrl and ModelName match exactly.
 
 ```JSON
@@ -133,8 +132,8 @@ dotnet run
 ```
 (Ensure it is running on http://localhost:5075, as expected by your frontend).
 
-6. Open the UI **(Download ->)** [UI](https://github.com/DJ2211/AI-Interviewer-UI)
-Since frontend is a plain HTML file, simply open index.html in your web browser (or use an extension like VS Code Live Server) to start your interview.
+6. Open the UI (Make sure API project is running) [FrontEnd](http://localhost:5075)
+   Frontend is present in API -> wwwroot -> index.html
 
 
 
